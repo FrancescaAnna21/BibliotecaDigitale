@@ -40,20 +40,29 @@ h1 {
     background-color: #f1e8e6;
     padding: 30px 0 0;
     padding-left: var(--padd-left);
+    display: flex; /* Usa flexbox per allineare i pulsanti */
+    flex-wrap: wrap; /* Permette ai pulsanti di andare a capo se necessario */
 }
 
-.filtri button {
+.filtri .button {
     background: none;
     border: 1px solid #86868b;
     padding: 8px 16px;
     margin-right: 8px;
+    margin-bottom: 8px; /* Aggiungi margine inferiore per evitare sovrapposizioni */
     border-radius: 20px;
     cursor: pointer;
+    box-sizing: border-box; /* Mantiene le dimensioni costanti */
 }
 
-.filtri button.attivo {
+.filtri .button:hover {
+    background: #ddd; /* Cambia colore al passaggio del mouse */
+}
+
+.filtri input[type="radio"]:checked + .button {
     background: #be917a;
     border-color: #be917a;
+    box-sizing: border-box; /* Mantiene le dimensioni costanti */
 }
 
 .sezione-data-pubbl h2 {
@@ -83,8 +92,9 @@ h1 {
         padding: 12px;
     }
     
-    .filtri button {
+    .filtri .button {
         width: 100%;
         margin-bottom: 8px;
     }
 }
+
