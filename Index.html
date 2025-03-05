@@ -106,7 +106,7 @@
         <!-- Modulo per l'aggiunta dei libri -->
         <section class="sezione-aggiungi-libro">
             <h2>Aggiungi un Nuovo Libro</h2>
-            <form action="aggiungi-libro.html" method="get">
+            <form id="form-aggiungi-libro">
                 <label for="titolo">Titolo:</label>
                 <input type="text" id="titolo" name="titolo" required>
 
@@ -148,7 +148,57 @@
                 libro.querySelector('.dettagli').classList.toggle('visibile');
             });
         });
+
+        document.getElementById("form-aggiungi-libro").addEventListener("submit", function(event) {
+            event.preventDefault(); // Previene il comportamento predefinito dell'invio del modulo
+
+            // Ottieni i valori del modulo
+            let titolo = document.getElementById("titolo").value;
+            let autore = document.getElementById("autore").value;
+            let categoria = document.getElementById("categoria").value;
+            let copertina = document.getElementById("copertina").files[0];
+            let trama = document.getElementById("trama").value;
+
+            // Crea un nuovo elemento libro
+            let libroDiv = document.createElement("div");
+            libroDiv.classList.add("libro");
+
+            // Crea l'elemento immagine
+            let imgElement = document.createElement("img");
+            imgElement.src = URL.createObjectURL(copertina);
+            imgElement.alt = "Copertina";
+            libroDiv.appendChild(imgElement);
+
+            // Crea l'elemento titolo
+            let titoloElement=document.createElement("h3");
+            titoloElement.textContent = titolo;
+            libroDiv.appendChild(titoloElement);
+
+            // Crea l'elemento dettagli
+            let dettagliDiv = document.createElement("div");
+            dettagliDiv.classList.add("dettagli");
+
+            let categoriaElement = document.createElement("p");
+            categoriaElement.innerHTML = `<strong>Genere:</strong> ${categoria}`;
+            dettagliDiv.appendChild(categoriaElement);
+
+            let tramaElement = document.createElement("p");
+            tramaElement.innerHTML = `<strong>Trama:</strong> ${trama}`;
+            dettagliDiv.appendChild(tramaElement);
+
+            libroDiv.appendChild(dettagliDiv);
+
+            // Aggiungi il libro alla lista dei libri di oggi
+            document.getElementById("lista-libri-oggi").appendChild(libroDiv);
+
+            // Resetta il modulo
+            document.getElementById("form-aggiungi-libro").reset();
+            
+            // Chiudi il modulo
+            document.getElementById("toggle-form").checked = false;
+        });
     </script>
 </body>
 </html>
+
 
