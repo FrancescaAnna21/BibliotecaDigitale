@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <creation-organizer>
-    </creation-organizer>
+    <creation-organizer></creation-organizer>
     
     <header>
         <h1>Libreria 3CI</h1>
@@ -57,30 +56,99 @@
     <main>
         <section class="sezione-data-pubbl">
             <h2>Oggi</h2>
-            <div class="lista-libri">
-                <div class="libro">Da aggiungere copertina libro e titolo</div>
-                <div class="libro">Titolo 2</div>
-                <div class="libro">Titolo 3</div>
-                <div class="libro">Titolo 4</div>
-                <div class="libro">Titolo 5</div>
-                <div class="libro">Titolo 6</div>
-                <div class="libro">Titolo 7</div>
+            <div class="lista-libri" id="lista-libri-oggi">
+                <!-- Esempio di libro -->
+                <div class="libro">
+                    <img src="copertina.jpg" alt="Copertina">
+                    <h3>Titolo del Libro</h3>
+                    <div class="dettagli">
+                        <p><strong>Genere:</strong> Avventura</p>
+                        <p><strong>Trama:</strong> Questa è la trama del libro.</p>
+                    </div>
+                </div>
+                <!-- Fine esempio di libro -->
             </div>
 
             <h2>Ieri</h2>
-            <div class="lista-libri">
-                <div class="libro">Titolo 4</div>
-                <div class="libro">Titolo 5</div>
+            <div class="lista-libri" id="lista-libri-ieri">
+                <div class="libro">
+                    <img src="copertina.jpg" alt="Copertina">
+                    <h3>Titolo del Libro</h3>
+                    <div class="dettagli">
+                        <p><strong>Genere:</strong> Avventura</p>
+                        <p><strong>Trama:</strong> Questa è la trama del libro.</p>
+                    </div>
+                </div>
             </div>
             
             <h2>22/02/2025</h2>
-            <div class="lista-libri">
-                <div class="libro">Titolo 6</div>
-                <div class="libro">Titolo 7</div>
+            <div class="lista-libri" id="lista-libri-altro">
+                <div class="libro">
+                    <img src="copertina.jpg" alt="Copertina">
+                    <h3>Titolo del Libro</h3>
+                    <div class="dettagli">
+                        <p><strong>Genere:</strong> Avventura</p>
+                        <p><strong>Trama:</strong> Questa è la trama del libro.</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Aggiungi altre sezioni temporali -->
         </section>
+
+        <!-- Pulsante + per aprire il modulo -->
+        <input type="checkbox" id="toggle-form" hidden>
+        <label for="toggle-form" class="add-book-btn">+</label>
+
+        <!-- Overlay per oscurare il contenuto sottostante -->
+        <div class="overlay"></div>
+        
+        <!-- Modulo per l'aggiunta dei libri -->
+        <section class="sezione-aggiungi-libro">
+            <h2>Aggiungi un Nuovo Libro</h2>
+            <form action="aggiungi-libro.html" method="get">
+                <label for="titolo">Titolo:</label>
+                <input type="text" id="titolo" name="titolo" required>
+
+                <label for="autore">Autore:</label>
+                <input type="text" id="autore" name="autore" required>
+                
+                <label for="categoria">Categoria:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="avventura">Avventura</option>
+                    <option value="azione">Azione</option>
+                    <option value="biografico">Biografico</option>
+                    <option value="crimine">Crimine</option>
+                    <option value="fantascienza">Fantascienza</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="romantico">Romantico</option>
+                    <option value="noir">Noir</option>
+                    <option value="horror">Horror</option>
+                    <option value="giallo">Giallo</option>
+                    <option value="psicologico">Psicologico</option>
+                    <option value="thriller">Thriller</option>
+                    <option value="western">Western</option>
+                </select>
+
+                <label for="copertina">Copertina:</label>
+                <input type="file" id="copertina" name="copertina" accept="image/*" required>
+
+                <label for="trama" class="trama-label">Trama:</label>
+                <textarea id="trama" name="trama" rows="4" required></textarea>
+                
+                <button type="submit">Aggiungi Libro</button>
+            </form>
+        </section>
     </main>
+
+    <!-- Script per gestire la visualizzazione dei dettagli del libro -->
+    <script>
+        document.querySelectorAll('.libro').forEach(libro => {
+            libro.addEventListener('click', () => {
+                libro.querySelector('.dettagli').classList.toggle('visibile');
+            });
+        });
+    </script>
 </body>
 </html>
+
