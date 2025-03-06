@@ -200,6 +200,7 @@ h1 {
 .schermata-libro {
     display: none;
     position: fixed;
+    height: 90%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -233,9 +234,28 @@ h1 {
     font-size: 1.1em;
 }
 
+
+.schermata-libro .pulsanti {
+    /*display: flex;*/
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.schermata-libro button {
+    background-color: #e095d682;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.schermata-libro button:hover {
+    background-color:#e095d682;
+}
+
 #chiudi-schermata {
     margin-top: 20px;
-    background-color: #4CAF50;
+    background-color: #e095d682;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -243,7 +263,7 @@ h1 {
 }
 
 #chiudi-schermata:hover {
-    background-color: #45a049;
+    background-color: #e095d682;
 }
 
 /* Responsive Design */
