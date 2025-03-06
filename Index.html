@@ -96,10 +96,12 @@
                     <p id="dettaglio-genere"><strong>Genere:</strong> </p>
                     <p id="dettaglio-data-pubblicazione"><strong>Data di Pubblicazione:</strong> </p>
                     <p id="dettaglio-isbn"><strong>ISBN:</strong> </p>
-                </div>
-                <div class="pulsanti">
-                    <button id="chiudi-schermata">Chiudi </button>
-                    <button id="elimina-libro">Elimina</button>
+
+                    <div class="pulsanti">
+                        <button class="pulsanti" id="chiudi-schermata">Chiudi </button>
+                        <button class="pulsanti" id="elimina-libro">Elimina</button>
+                    </div>
+
                 </div>
             </section>
 
@@ -114,6 +116,7 @@
 
             <!-- Modulo per l'aggiunta dei libri -->
             <section class="sezione-aggiungi-libro" id="sezione-aggiungi-libro">
+                <button id="chiudi-form" class="close-btn">&times;</button>
                 <h2>Aggiungi un Nuovo Libro</h2>
                 <form id="aggiungi-libro-form">
                     <label for="titolo">Titolo:</label>
@@ -152,7 +155,7 @@
                     <label for="isbn">ISBN:</label>
                     <input type="text" id="isbn" name="isbn" required>
 
-                    <button type="submit">Aggiungi Libro</button>
+                    <button type="submit" id="aggiungi">Aggiungi Libro</button>
                 </form>
             </section>
 
@@ -383,6 +386,11 @@
                     document.getElementById('schermata-libro').style.display = 'none';
                     document.getElementById('overlay').style.display = 'none';
                 });
+
+                document.getElementById('chiudi-form').addEventListener('click', () => {
+                    document.getElementById('toggle-form').checked = false;
+                });
+
 
             </script>
 </body>
