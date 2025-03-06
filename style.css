@@ -102,7 +102,7 @@ h1 {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    background-color: #4CAF50;
+    background-color:#e095d6;
     color: white;
     border: none;
     border-radius: 50%;
@@ -116,7 +116,7 @@ h1 {
 }
 
 .add-book-btn:hover {
-    background-color: #45a049;
+    background-color: #f1c4eb;
 }
 
 #toggle-form {
@@ -166,14 +166,14 @@ h1 {
 }
 
 .sezione-aggiungi-libro button {
-    background-color: #4CAF50;
+    background-color:#e095d6;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 .sezione-aggiungi-libro button:hover {
-    background-color: #45a049;
+    background-color: #e095d6;
 }
 
 .sezione-aggiungi-libro .trama-label {
