@@ -263,4 +263,20 @@ h1 {
     }
 }
 
+.sezione-aggiungi-libro {
+    max-height: 80vh; /* Imposta l'altezza massima del contenitore al 80% della finestra */
+    overflow-y: auto; /* Permette la barra di scorrimento verticale quando necessario */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#aggiungi-libro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
 
