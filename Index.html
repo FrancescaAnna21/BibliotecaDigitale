@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libreria 3CI</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
     <creation-organizer></creation-organizer>
@@ -58,38 +59,26 @@
             <h2>Oggi</h2>
             <div class="lista-libri" id="lista-libri-oggi">
                 <!-- Esempio di libro -->
-                <div class="libro">
+                <div class="libro" data-copertina="copertina.jpg" data-titolo="Titolo del Libro" data-autore="Autore del Libro" data-trama="Questa è la trama del libro." data-genere="Avventura">
                     <img src="copertina.jpg" alt="Copertina">
                     <h3>Titolo del Libro</h3>
-                    <div class="dettagli">
-                        <p><strong>Genere:</strong> Avventura</p>
-                        <p><strong>Trama:</strong> Questa è la trama del libro.</p>
-                    </div>
                 </div>
                 <!-- Fine esempio di libro -->
             </div>
 
-            <h2>Ieri</h2>
+            <h2></h2>
             <div class="lista-libri" id="lista-libri-ieri">
-                <div class="libro">
+                <div class="libro" data-copertina="copertina.jpg" data-titolo="Titolo del Libro" data-autore="Autore del Libro" data-trama="Questa è la trama del libro." data-genere="Avventura">
                     <img src="copertina.jpg" alt="Copertina">
                     <h3>Titolo del Libro</h3>
-                    <div class="dettagli">
-                        <p><strong>Genere:</strong> Avventura</p>
-                        <p><strong>Trama:</strong> Questa è la trama del libro.</p>
-                    </div>
                 </div>
             </div>
             
-            <h2>22/02/2025</h2>
+            <h2></h2>
             <div class="lista-libri" id="lista-libri-altro">
-                <div class="libro">
+                <div class="libro" data-copertina="copertina.jpg" data-titolo="Titolo del Libro" data-autore="Autore del Libro" data-trama="Questa è la trama del libro." data-genere="Avventura">
                     <img src="copertina.jpg" alt="Copertina">
                     <h3>Titolo del Libro</h3>
-                    <div class="dettagli">
-                        <p><strong>Genere:</strong> Avventura</p>
-                        <p><strong>Trama:</strong> Questa è la trama del libro.</p>
-                    </div>
                 </div>
             </div>
 
@@ -101,12 +90,12 @@
         <label for="toggle-form" class="add-book-btn">+</label>
 
         <!-- Overlay per oscurare il contenuto sottostante -->
-        <div class="overlay"></div>
+        <div class="overlay" id="overlay"></div>
         
         <!-- Modulo per l'aggiunta dei libri -->
-        <section class="sezione-aggiungi-libro">
+        <section class="sezione-aggiungi-libro" id="sezione-aggiungi-libro">
             <h2>Aggiungi un Nuovo Libro</h2>
-            <form id="form-aggiungi-libro">
+            <form id="aggiungi-libro-form">
                 <label for="titolo">Titolo:</label>
                 <input type="text" id="titolo" name="titolo" required>
 
@@ -139,65 +128,218 @@
                 <button type="submit">Aggiungi Libro</button>
             </form>
         </section>
+
+        <!-- Schermata del libro -->
+        <section class="schermata-libro" id="schermata-libro">
+            <div class="contenuto-libro">
+                <img id="img-copertina" src="" alt="Copertina">
+                <h3 id="dettaglio-titolo"></h3>
+                <p id="dettaglio-autore"><strong>Autore:</strong> </p>
+                <p id="dettaglio-trama"><strong>Trama:</strong> </p>
+                <p id="dettaglio-genere"><strong>Genere:</strong> </p>
+            </div>
+            <button id="chiudi-schermata">Chiudi</button>
+        </section>
     </main>
 
-    <!-- Script per gestire la visualizzazione dei dettagli del libro -->
+    <!-- Script per gestire la visualizzazione dei dettagli del libro e l'aggiunta di nuovi libri -->
+    <script>
+        document.querySelectorAll('.libro').forEach(libro => {
+    libro.addEventListener('click', () => {
+        const copertina = libro.getAttribute('data-copertina');
+        const titolo = libro.getAttribute('data-titolo');
+        const autore = libro.getAttribute('data-autore');
+        const trama = libro.getAttribute('data-trama');
+        const genere = libro.getAttribute('data-genere');
+        
+        document.getElementById('img-copertina').src = copertina;
+        document.getElementById('dettaglio-titolo').innerText = titolo;
+        document.getElementById('dettaglio-autore').innerText = `Autore: ${autore}`;
+        document.getElementById('dettaglio-trama').innerText = `Trama: ${trama}`;
+        document.getElementById('dettaglio-genere').innerText = `Genere: ${genere}`;
+        
+        document.getElementById('schermata-libro').style.display = 'flex';
+        document.getElementById('overlay').style.display = 'block';
+    });
+});
+
+document.getElementById('chiudi-schermata').addEventListener('click', () => {
+    document.getElementById('schermata-libro').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+});
+
+document.getElementById('aggiungi-libro-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Impedisce l'invio del modulo
+
+    const titolo = document.getElementById('titolo').value;
+    const autore = document.getElementById('autore').value;
+    const categoria = document.getElementById('categoria').value;
+    const copertina = URL.createObjectURL(document.getElementById('copertina').files[0]);
+    const trama = document.getElementById('trama').value;
+
+    // Crea un nuovo elemento libro
+    const nuovoLibro = document.createElement('div');
+    nuovoLibro.classList.add('libro');
+    nuovoLibro.setAttribute('data-copertina', copertina);
+    nuovoLibro.setAttribute('data-titolo', titolo);
+    nuovoLibro.setAttribute('data-autore', autore);
+    nuovoLibro.setAttribute('data-trama', trama);
+    nuovoLibro.setAttribute('data-genere', categoria);
+
+    // Aggiungi il contenuto del libro
+    nuovoLibro.innerHTML = `
+        <img src="${copertina}" alt="Copertina">
+        <h3>${titolo}</h3>
+    `;
+
+    // Aggiungi il nuovo libro alla lista dei libri di oggi
+    document.getElementById('lista-libri-oggi').appendChild(nuovoLibro);
+
+    // Ripristina il modulo
+    document.getElementById('aggiungi-libro-form').reset();
+    document.getElementById('toggle-form').checked = false;
+
+    // Aggiungi l'evento click al nuovo libro
+    nuovoLibro.addEventListener('click', () => {
+        document.getElementById('img-copertina').src = copertina;
+        document.getElementById('dettaglio-titolo').innerText = titolo;
+        document.getElementById('dettaglio-autore').innerText = `Autore: ${autore}`;
+        document.getElementById('dettaglio-trama').innerText = `Trama: ${trama}`;
+        document.getElementById('dettaglio-genere').innerText = `Genere: ${categoria}`;
+        document.getElementById('schermata-libro').style.display = 'flex';
+        document.getElementById('overlay').style.display = 'block';
+    });
+});
+    </script>
+
+    <script>
+    document.getElementById('aggiungi-libro-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Impedisce l'invio del modulo
+    
+        const titolo = document.getElementById('titolo').value;
+        const autore = document.getElementById('autore').value;
+        const categoria = document.getElementById('categoria').value;
+        const copertina = URL.createObjectURL(document.getElementById('copertina').files[0]);
+        const trama = document.getElementById('trama').value;
+    
+        const nuovoLibro = { titolo, autore, categoria, copertina, trama };
+        let libri = JSON.parse(localStorage.getItem('libri')) || [];
+        libri.push(nuovoLibro);
+        localStorage.setItem('libri', JSON.stringify(libri));
+    
+        // Aggiungi il libro alla lista dei libri di oggi
+        visualizzaLibri();
+    
+        // Ripristina il modulo
+        document.getElementById('aggiungi-libro-form').reset();
+        document.getElementById('toggle-form').checked = false;
+    });
+    
+    function visualizzaLibri() {
+        let libri = JSON.parse(localStorage.getItem('libri')) || [];
+        const listaLibriOggi = document.getElementById('lista-libri-oggi');
+        listaLibriOggi.innerHTML = '';
+    
+        libri.forEach(libro => {
+            const nuovoLibro = document.createElement('div');
+            nuovoLibro.classList.add('libro');
+            nuovoLibro.setAttribute('data-copertina', libro.copertina);
+            nuovoLibro.setAttribute('data-titolo', libro.titolo);
+            nuovoLibro.setAttribute('data-autore', libro.autore);
+            nuovoLibro.setAttribute('data-trama', libro.trama);
+            nuovoLibro.setAttribute('data-genere', libro.categoria);
+    
+            nuovoLibro.innerHTML = `
+                <img src="${libro.copertina}" alt="Copertina">
+                <h3>${libro.titolo}</h3>
+            `;
+    
+            listaLibriOggi.appendChild(nuovoLibro);
+    
+            nuovoLibro.addEventListener('click', () => {
+                document.getElementById('img-copertina').src = libro.copertina;
+                document.getElementById('dettaglio-titolo').innerText = libro.titolo;
+                document.getElementById('dettaglio-autore').innerText = `Autore: ${libro.autore}`;
+                document.getElementById('dettaglio-trama').innerText = `Trama: ${libro.trama}`;
+                document.getElementById('dettaglio-genere').innerText = `Genere: ${libro.categoria}`;
+                document.getElementById('schermata-libro').style.display = 'flex';
+                document.getElementById('overlay').style.display = 'block';
+            });
+        });
+    }
+    
+    document.getElementById('chiudi-schermata').addEventListener('click', () => {
+        document.getElementById('schermata-libro').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    });
+    
+    document.addEventListener('DOMContentLoaded', visualizzaLibri);
+    </script>
     <script>
         document.querySelectorAll('.libro').forEach(libro => {
             libro.addEventListener('click', () => {
-                libro.querySelector('.dettagli').classList.toggle('visibile');
+                const copertina = libro.getAttribute('data-copertina');
+                const titolo = libro.getAttribute('data-titolo');
+                const autore = libro.getAttribute('data-autore');
+                const trama = libro.getAttribute('data-trama');
+                const genere = libro.getAttribute('data-genere');
+                
+                document.getElementById('img-copertina').src = copertina;
+                document.getElementById('dettaglio-titolo').innerText = titolo;
+                document.getElementById('dettaglio-autore').innerText = `Autore: ${autore}`;
+                document.getElementById('dettaglio-trama').innerText = `Trama: ${trama}`;
+                document.getElementById('dettaglio-genere').innerText = `Genere: ${genere}`;
+                
+                document.getElementById('schermata-libro').style.display = 'flex';
+                document.getElementById('overlay').style.display = 'block';
             });
         });
-
-        document.getElementById("form-aggiungi-libro").addEventListener("submit", function(event) {
-            event.preventDefault(); // Previene il comportamento predefinito dell'invio del modulo
-
-            // Ottieni i valori del modulo
-            let titolo = document.getElementById("titolo").value;
-            let autore = document.getElementById("autore").value;
-            let categoria = document.getElementById("categoria").value;
-            let copertina = document.getElementById("copertina").files[0];
-            let trama = document.getElementById("trama").value;
-
-            // Crea un nuovo elemento libro
-            let libroDiv = document.createElement("div");
-            libroDiv.classList.add("libro");
-
-            // Crea l'elemento immagine
-            let imgElement = document.createElement("img");
-            imgElement.src = URL.createObjectURL(copertina);
-            imgElement.alt = "Copertina";
-            libroDiv.appendChild(imgElement);
-
-            // Crea l'elemento titolo
-            let titoloElement=document.createElement("h3");
-            titoloElement.textContent = titolo;
-            libroDiv.appendChild(titoloElement);
-
-            // Crea l'elemento dettagli
-            let dettagliDiv = document.createElement("div");
-            dettagliDiv.classList.add("dettagli");
-
-            let categoriaElement = document.createElement("p");
-            categoriaElement.innerHTML = `<strong>Genere:</strong> ${categoria}`;
-            dettagliDiv.appendChild(categoriaElement);
-
-            let tramaElement = document.createElement("p");
-            tramaElement.innerHTML = `<strong>Trama:</strong> ${trama}`;
-            dettagliDiv.appendChild(tramaElement);
-
-            libroDiv.appendChild(dettagliDiv);
-
-            // Aggiungi il libro alla lista dei libri di oggi
-            document.getElementById("lista-libri-oggi").appendChild(libroDiv);
-
-            // Resetta il modulo
-            document.getElementById("form-aggiungi-libro").reset();
-            
-            // Chiudi il modulo
-            document.getElementById("toggle-form").checked = false;
+    
+        document.getElementById('chiudi-schermata').addEventListener('click', () => {
+            document.getElementById('schermata-libro').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
         });
-    </script>
+    
+        document.getElementById('aggiungi-libro-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const titolo = document.getElementById('titolo').value;
+            const autore = document.getElementById('autore').value;
+            const categoria = document.getElementById('categoria').value;
+            const trama = document.getElementById('trama').value;
+            const copertinaInput = document.getElementById('copertina');
+            const copertina = URL.createObjectURL(copertinaInput.files[0]);
+            
+            const newBook = document.createElement('div');
+            newBook.className = 'libro';
+            newBook.setAttribute('data-copertina', copertina);
+            newBook.setAttribute('data-titolo', titolo);
+            newBook.setAttribute('data-autore', autore);
+            newBook.setAttribute('data-trama', trama);
+            newBook.setAttribute('data-genere', categoria);
+            
+            newBook.innerHTML = `
+                <img src="${copertina}" alt="Copertina">
+                <h3>${titolo}</h3>
+            `;
+            
+            document.getElementById('lista-libri-oggi').appendChild(newBook);
+    
+            newBook.addEventListener('click', () => {
+                document.getElementById('img-copertina').src = copertina;
+                document.getElementById('dettaglio-titolo').innerText = titolo;
+                document.getElementById('dettaglio-autore').innerText = `Autore: ${autore}`;
+                document.getElementById('dettaglio-trama').innerText = `Trama: ${trama}`;
+                document.getElementById('dettaglio-genere').innerText = `Genere: ${categoria}`;
+                
+                document.getElementById('schermata-libro').style.display = 'flex';
+                document.getElementById('overlay').style.display = 'block';
+            });
+    
+            document.getElementById('aggiungi-libro-form').reset();
+            document.getElementById('toggle-form').checked = false;
+        });
+    </script>    
 </body>
 </html>
 

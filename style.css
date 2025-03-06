@@ -98,14 +98,6 @@ h1 {
     font-size: 1.2em;
 }
 
-.libro .dettagli {
-    display: none;
-}
-
-.libro .dettagli.visibile {
-    display: block;
-}
-
 .add-book-btn {
     position: fixed;
     bottom: 20px;
@@ -204,6 +196,56 @@ h1 {
     display: block;
 }
 
+/* Schermata del libro */
+.schermata-libro {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    padding: 20px;
+}
+
+.schermata-libro .contenuto-libro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.schermata-libro img {
+    width: 50%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.schermata-libro h3 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+}
+
+.schermata-libro p {
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+#chiudi-schermata {
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#chiudi-schermata:hover {
+    background-color: #45a049;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
@@ -215,7 +257,8 @@ h1 {
         margin-bottom: 8px;
     }
     
-    .sezione-aggiungi-libro {
+    .sezione-aggiungi-libro,
+    .schermata-libro {
         width: 90%;
     }
 }
