@@ -299,46 +299,6 @@ document.getElementById('aggiungi-libro-form').addEventListener('submit', functi
             document.getElementById('schermata-libro').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         });
-    
-        document.getElementById('aggiungi-libro-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const titolo = document.getElementById('titolo').value;
-            const autore = document.getElementById('autore').value;
-            const categoria = document.getElementById('categoria').value;
-            const trama = document.getElementById('trama').value;
-            const copertinaInput = document.getElementById('copertina');
-            const copertina = URL.createObjectURL(copertinaInput.files[0]);
-            
-            const newBook = document.createElement('div');
-            newBook.className = 'libro';
-            newBook.setAttribute('data-copertina', copertina);
-            newBook.setAttribute('data-titolo', titolo);
-            newBook.setAttribute('data-autore', autore);
-            newBook.setAttribute('data-trama', trama);
-            newBook.setAttribute('data-genere', categoria);
-            
-            newBook.innerHTML = `
-                <img src="${copertina}" alt="Copertina">
-                <h3>${titolo}</h3>
-            `;
-            
-            document.getElementById('lista-libri-oggi').appendChild(newBook);
-    
-            newBook.addEventListener('click', () => {
-                document.getElementById('img-copertina').src = copertina;
-                document.getElementById('dettaglio-titolo').innerText = titolo;
-                document.getElementById('dettaglio-autore').innerText = `Autore: ${autore}`;
-                document.getElementById('dettaglio-trama').innerText = `Trama: ${trama}`;
-                document.getElementById('dettaglio-genere').innerText = `Genere: ${categoria}`;
-                
-                document.getElementById('schermata-libro').style.display = 'flex';
-                document.getElementById('overlay').style.display = 'block';
-            });
-    
-            document.getElementById('aggiungi-libro-form').reset();
-            document.getElementById('toggle-form').checked = false;
-        });
     </script>    
 </body>
 </html>
