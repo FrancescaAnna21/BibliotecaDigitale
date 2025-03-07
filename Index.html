@@ -143,7 +143,7 @@
                     </select>
 
                     <label for="copertina">Copertina:</label>
-                    <input type="file" id="copertina" name="copertina" accept="image/*" required>
+                    <input type="file" id="copertina" name="copertina" accept="image/*" onchange="gestisciFile()" required>
 
                     <label for="trama" class="trama-label">Trama:</label>
                     <textarea id="trama" name="trama" rows="4" required></textarea>
@@ -175,6 +175,8 @@
                         });
                     });
                     localStorage.setItem('libri', JSON.stringify(libri));
+                    salvaCopertina();
+
                 }
 
                 // Funzione per caricare i libri dal LocalStorage
@@ -183,7 +185,7 @@
                     libri.forEach(libro => {
                         const newBook = document.createElement('div');
                         newBook.className = 'libro';
-                        newBook.setAttribute('data-copertina', libro.copertina);
+                        //newBook.setAttribute('data-copertina', libro.copertina);
                         newBook.setAttribute('data-titolo', libro.titolo);
                         newBook.setAttribute('data-autore', libro.autore);
                         newBook.setAttribute('data-trama', libro.trama);
@@ -231,7 +233,7 @@
 
                     const newBook = document.createElement('div');
                     newBook.className = 'libro';
-                    newBook.setAttribute('data-copertina', copertina);
+                    //newBook.setAttribute('data-copertina', copertina);
                     newBook.setAttribute('data-titolo', titolo);
                     newBook.setAttribute('data-autore', autore);
                     newBook.setAttribute('data-trama', trama);
@@ -277,7 +279,63 @@
                     document.getElementById('schermata-libro').style.display = 'none';
                     document.getElementById('overlay').style.display = 'none';
                 });
-            </script>
+
+                // Variabile per immagazzinare la copertina in formato base64
+                let copertinaBase64 = '';
+
+                // Funzione per gestire il file selezionato
+                function gestisciFile() {
+                    const fileInput = document.getElementById('copertina');
+                    const file = fileInput.files[0]; // Prendi il primo file selezionato
+
+                    if (file) {
+                        const reader = new FileReader();
+
+                        // Funzione che esegue quando il file è stato letto
+                        reader.onloadend = function () {
+                            copertinaBase64 = reader.result; // Memorizza il risultato come base64
+                            mostraAnteprima(copertinaBase64);
+                        };
+
+                        // Leggi il file come URL base64
+                        reader.readAsDataURL(file);
+                    }
+                }
+
+                // Funzione per visualizzare l'anteprima dell'immagine
+                function mostraAnteprima(base64) {
+                    const img = document.getElementById('copertina');
+                    img.src = base64;
+                }
+
+                // Funzione per salvare la copertina nel localStorage
+                function salvaCopertina() {
+                    if (copertinaBase64) {
+                        // Salva la copertina in formato base64 nel localStorage
+                        localStorage.setItem('copertina', copertinaBase64);
+
+                        // Mostra un messaggio di conferma
+                        alert('Copertina salvata!');
+                    } else {
+                        alert('Seleziona un\'immagine prima di salvarla.');
+                    }
+                }
+
+                // Funzione per caricare la copertina salvata al caricamento della pagina
+                function caricaCopertina() {
+                    const copertina = localStorage.getItem('copertina');
+
+                    if (copertina) {
+                        // Imposta l'anteprima della copertina salvata
+                        document.getElementById('copertina').src = copertina;
+                    }
+                }
+
+                // Carica la copertina salvata al caricamento della pagina
+                window.onload = function () {
+                    caricaCopertina();
+                };
+
             </script>
             <script>
                 document.getElementById('aggiungi-libro-form').addEventListener('submit', function (event) {
